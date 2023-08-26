@@ -1,11 +1,11 @@
 /*------------------------------------------------------------------------------------|
 |  Autor:PABLO ALMONTE                    MATRICULA: 1-20-2318                        | 
 |         HOSNY CEBALLOS                             1-20-2085                        |
-|  Fecha: 25/08/2023                     Version: 1.2.1		                          |
+|  Fecha: 25/08/2023                     Version: 3.3.2	                          |
 |-------------------------------------------------------------------------------------|           
 |  Descripcion del Programa: ESTE ES UN SISTEMA DE FACTURACION PARA UN LUBRIAUTO,     |
                              DONDE PODREMOS FACTURAR Y COTIZAR NUESTROS PRODUCTOS Y   |
-                            SERVICIOS, crear usuarios y manejar la nomina.            |   
+                            SERVICIOS, crear usuarios y visualizar la nomina.         |   
                                                                                       |           
 | -----------------------------------------------------------------------------------*/
 
@@ -14,7 +14,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
+int found =0;
 #define tamano 100
 
 typedef struct 
@@ -61,7 +61,7 @@ void inicio_sesion()
 
     char archivo_nombre[tamano];
     char archivo_clave[tamano];
-    int found = 0;
+    //int found = 0;
 
     while (fscanf(archivo, "%s %s", archivo_nombre, archivo_clave) != EOF) 
     {
@@ -145,12 +145,15 @@ struct servicios
 
 int main() {
     int x;
-                 FILE *archivo;
+    FILE *archivo;
     char caracter;
     char documento[] = "servicios.txt"; 
     int  r,f,c1=0,c2=0;
     float z,zt, st, s,t;
-
+    FILE *archivo1;
+    char nomina;
+    char documento1[]="ARCHIVO.dat.txt";
+            
     struct servicios s1 = {2500,"aceite", "filtro de aceite"}, s2 = {2800 ,"aceite", "filtro de aceite","filtro de combustible"}, s3 = {3120,"aceite", "filtro de aceite","filtro de combustible", "filtro de aire"}, s4 = {3321,"aceite", "filtro de aceite","filtro de combustible","filtro de aire", "filtro A/A"}, s5 = {450,"Lavado"};
 
 
@@ -158,7 +161,8 @@ int main() {
         printf("Seleccione una opcion:\n");
         printf("1. Crear usuario\n");
         printf("2. Iniciar sesion\n");
-        printf("3. Salir\n");
+        printf("3. Nomina\n");
+        printf("4. Salir\n");
         printf("Opcion: ");
         scanf("%d", &x);
 
@@ -168,33 +172,34 @@ int main() {
                 break;
             case 2:
                 inicio_sesion();
-                if(inicio_sesion)
+                if(found)
+              {  
                 
 
-    printf("\nBIENVENIDO\n");
+             printf("\nBIENVENIDO\n");
    
-do
-{   
-    c1=0;
-    do
-    {
-        if ((archivo = fopen(documento, "r")))
+            do
+           {   
+             c1=0;
+             do
+           {
+           if ((archivo = fopen(documento, "r")))
             
             {
                     // Leer y mostrar el contenido del archivo línea por línea
-        while ((caracter = fgetc(archivo)) != EOF) 
-        {
-        printf("%c", caracter);
-         }
+            while ((caracter = fgetc(archivo)) != EOF) 
+           {
+           printf("%c", caracter);
+           }
                 fclose(archivo);
             }
 
-         printf("\n");
-        scanf("%d", &x);
+            printf("\n");
+            scanf("%d", &x);
 
-        switch (x)
+             switch (x)
         {
-        case 1:
+          case 1:
             printf("\n%s", s1.art1);
             printf("\n%s", s1.art2);
             printf("\n%d", s1.pre);
@@ -207,7 +212,7 @@ do
 
             break;
 
-        case 2:
+         case 2:
             printf("\n%s", s2.art1);
             printf("\n%s", s2.art2);
             printf("\n%s", s2.art3);
@@ -219,7 +224,7 @@ do
             
             break;
 
-        case 3:
+         case 3:
             printf("\n%s", s3.art1);
             printf("\n%s", s3.art2);
             printf("\n%s", s3.art3);
@@ -231,7 +236,7 @@ do
             c1=c1+s3.pre;
             break;
 
-        case 4:
+         case 4:
             printf("\n%s", s4.art1);
             printf("\n%s", s4.art2);
             printf("\n%s", s4.art3);
@@ -244,7 +249,7 @@ do
             c1=c1+s4.pre;
             break;
 
-        case 5:
+         case 5:
             printf("\n%s", s5.art1);
             printf("\n%d", s5.pre);
             printf("\nrealizar 1-si, 0-no\n");
@@ -257,11 +262,11 @@ do
 
            
 
-        default:
+         default:
             if(x>5)
             printf("\nOpcion no valida\n");
             break;
-        }
+         }
 
     } while (x > 0);
 
@@ -285,15 +290,36 @@ do
     printf("\nganancias: %f", t);
     printf("\nEl programa se ha ejecutado exitosamente");
     return 0;
-
+              }
 
 
 
 
                 break;
             case 3:
-                printf("Saliendo\n");
+            
+
+             if ((archivo1 = fopen(documento1, "r")))
+            
+             {
+         
+               while ((nomina = fgetc(archivo1)) != EOF) 
+               {
+                printf("%c", nomina);
+               }
+                fclose(archivo1);
+             }
+
+              printf("\n\nDigite 0 para reresar al menu principal\n");
+              scanf("%d", &f);
+
+            break;
+
+            case 4 : 
+                 printf("Saliendo\n");
                 exit(0);
+            break;
+
             default:
                 printf("Opcion no valida.\n");
                 break;
